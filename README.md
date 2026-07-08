@@ -4,6 +4,8 @@
 [![WebAssembly](https://img.shields.io/badge/Powered%20by-WebAssembly-blueviolet?style=for-the-badge&logo=webassembly)](https://webassembly.org/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
+![Giao diện Đất Sét DOCX to LaTeX](public/screenshot.png)
+
 Công cụ chuyển đổi tài liệu Microsoft Word (`.docx`) sang định dạng LaTeX (`.tex`) chuyên nghiệp, chạy trực tiếp trên trình duyệt của bạn bằng công nghệ WebAssembly (WASM).
 
 ---
