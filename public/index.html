@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOCX to LaTeX - Claymation Edition</title>
+    <!-- Google Fonts: MedievalSharp for gothic clay titles, Fredoka for squishy rounded text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=MedievalSharp&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+    <!-- SVG Filter tạo viền lồi lõm cho đất sét nặn thủ công -->
+    <svg style="position: absolute; width: 0; height: 0;" width="0" height="0">
+        <filter id="clay-edge">
+            <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg>
+
+    <!-- Background phủ mờ căn phòng Gothic từ ảnh gốc -->
+    <div class="gothic-room-bg">
+        <div class="shadow-overlay"></div>
+    </div>
+
+    <main class="container">
+        <!-- Khung trình duyệt bằng đất sét xám xanh (Clay Browser Frame) -->
+        <div class="clay-browser-window">
+            
+            <!-- Thanh tiêu đề trình duyệt đất sét xám xanh -->
+            <div class="clay-title-bar">
+                <div class="clay-dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <!-- Khiên Logo đất sét đỏ-gạch viền vàng giống hệt trong ảnh -->
+                <div class="clay-url-shield">
+                    <div class="shield-math-top">&Sigma; &nbsp; &int; &nbsp; &alpha;</div>
+                    <span class="gothic-title">DOC-LATEX</span>
+                    <div class="shield-math-bottom">a &nbsp; &forall; &nbsp; &divide;</div>
+                </div>
+                <div class="clay-menu-burger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+
+            <!-- Bảng đất sét sáng màu chứa nội dung -->
+            <div class="clay-content-area">
+                <header class="app-header">
+                    <h2>Chuyển Đổi Word Sang LaTeX</h2>
+                    <p class="subtitle">Dịch file .docx sang code LaTeX và trích xuất hình ảnh tự động chạy hoàn toàn cục bộ trên máy tính của bạn.</p>
+                </header>
+
+                <!-- Vùng kéo thả thiết kế kiểu Cuộn Giấy Đất Sét màu trắng ngà (Templates Panel) -->
+                <div class="dropzone clay-scroll-panel" id="dropzone">
+                    <input type="file" id="fileInput" accept=".docx" hidden>
+                    <div class="dropzone-content">
+                        <div class="clay-icon-wrapper">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <h3>Kéo thả file .docx vào đây</h3>
+                        <p>hoặc nhấn để <span>chọn file</span></p>
+                    </div>
+                    <div class="file-details clay-file-tag" id="fileDetails" style="display: none;">
+                        <i class="fa-regular fa-file-word file-icon"></i>
+                        <div class="file-info">
+                            <span class="file-name" id="fileName">tailieu.docx</span>
+                            <span class="file-size" id="fileSize">2.4 MB</span>
+                        </div>
+                        <button class="remove-btn" id="removeFileBtn" title="Gỡ file">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Các khối tùy chọn nặn bằng đất sét giống trong ảnh -->
+                <div class="options-grid">
+                    <!-- Khối Tùy chọn 1: Đất sét Vàng (Mô phỏng Panel Documentation) -->
+                    <div class="option-card clay-card-yellow">
+                        <div class="option-info">
+                            <label for="optStandalone" class="option-title">
+                                <i class="fa-solid fa-file-lines"></i> Tài liệu độc lập (Standalone)
+                            </label>
+                            <p class="option-desc">Tạo file .tex đầy đủ phần khai báo (\documentclass, \begin{document}) biên dịch được ngay.</p>
+                        </div>
+                        <div class="clay-toggle">
+                            <input type="checkbox" id="optStandalone" checked>
+                            <label for="optStandalone" class="clay-toggle-label"></label>
+                        </div>
+                    </div>
+
+                    <!-- Khối Tùy chọn 2: Đất sét Xanh lá (Mô phỏng Panel Tutorials) -->
+                    <div class="option-card clay-card-green">
+                        <div class="option-info">
+                            <label for="optExtractMedia" class="option-title">
+                                <i class="fa-regular fa-images"></i> Trích xuất hình ảnh (Media)
+                            </label>
+                            <p class="option-desc">Tự động trích xuất toàn bộ ảnh trong file Word ra thư mục riêng để lưu cùng file LaTeX.</p>
+                        </div>
+                        <div class="clay-toggle">
+                            <input type="checkbox" id="optExtractMedia" checked>
+                            <label for="optExtractMedia" class="clay-toggle-label"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nút chuyển đổi lớn bằng Đất sét Tím sẫm (Mô phỏng khối Doc-Latex chính) -->
+                <button class="convert-btn clay-btn-purple" id="convertBtn" disabled>
+                    <span class="btn-text">Đang tải bộ WASM...</span>
+                    <i class="fa-solid fa-spinner fa-spin" id="convertBtnIcon"></i>
+                </button>
+
+                <!-- Trạng thái xử lý bằng đất sét -->
+                <div class="progress-container clay-scroll-panel" id="progressContainer" style="display: none;">
+                    <div class="progress-header">
+                        <span id="progressStatus">Đang xử lý...</span>
+                        <span id="progressPercent">0%</span>
+                    </div>
+                    <div class="progress-bar-clay">
+                        <div class="progress-fill-clay" id="progressFill"></div>
+                    </div>
+                </div>
+
+                <!-- Khối kết quả: Đất sét màu xanh da trời (Mô phỏng Panel Forum) -->
+                <div class="result-card clay-card-blue" id="resultCard" style="display: none;">
+                    <div class="result-status">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <div class="result-details">
+                            <h4>Chuyển đổi thành công!</h4>
+                            <p id="resultMessage">Tải về file kết quả của bạn dưới đây.</p>
+                        </div>
+                    </div>
+                    <a href="#" class="download-btn clay-btn-yellow" id="downloadBtn">
+                        <span>Tải file kết quả</span>
+                        <i class="fa-solid fa-download"></i>
+                    </a>
+                </div>
+
+                <!-- Khối báo lỗi: Đất sét màu đỏ gạch -->
+                <div class="error-card clay-card-red" id="errorCard" style="display: none;">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <div class="error-details">
+                        <h4>Đã xảy ra lỗi</h4>
+                        <p id="errorMessage">Chuyển đổi thất bại.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2026 DOCX to LaTeX Claymation Version. Designed by MinhHK.</p>
+    </footer>
+
+    <!-- Script loading as module with cache busting -->
+    <script type="module" src="app.js?v=2"></script>
+</body>
+</html>

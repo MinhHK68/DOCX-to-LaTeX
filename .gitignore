@@ -1,0 +1,15 @@
+# Phân mục sao lưu riêng tư của MinhHK (Không bao giờ đẩy lên GitHub)
+private_src_backup/
+
+# Firebase configuration & logs
+.firebase/
+firebase-debug.log
+.firebaserc
+
+# Node.js dependencies
+node_modules/
+package-lock.json
+
+# OS files
+.DS_Store
+Thumbs.db
